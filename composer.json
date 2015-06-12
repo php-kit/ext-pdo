@@ -1,0 +1,24 @@
+{
+  "name": "impactwave/extpdo",
+  "description": "An extension to the standard PHP PDO API.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Impactwave",
+      "email": "impactwave@impactwave.com",
+      "homepage": "http://impactwave.com"
+    },
+    {
+      "name": "Claudio Silva",
+      "email": "claudio.silva@impactwave.com"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Impactwave\\": "src"
+    }
+  },
+  "minimum-stability": "dev"
+}

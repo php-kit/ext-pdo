@@ -4,26 +4,31 @@ use PDO;
 
 class ExtPDO extends PDO
 {
-  static $OPTIONS = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_TIMEOUT            => 5
-  ];
-
   public $transactionDepth = 0;
 
+  /**
+   * Begins a transaction if one is not currently active and ignores further nested transaction requests.
+   * <p>
+   * > Note: Only when all nested virtual transactions are committed will the real transaction be committed.
+   */
   public function beginTransaction ()
   {
     if (++$this->transactionDepth == 1)
       parent::beginTransaction ();
   }
 
+  /**
+   * Commits the real transaction only when all nested virtual transactions have been committed.
+   */
   public function commit ()
   {
     if (--$this->transactionDepth == 0)
       parent::commit ();
   }
 
+  /**
+   * Immediately rolls back the transaction and ignores further nested virtual roll backs.
+   */
   public function rollBack ()
   {
     if ($this->transactionDepth > 0) {
@@ -32,12 +37,15 @@ class ExtPDO extends PDO
     }
   }
 
+  /**
+   * @param string     $query
+   * @param array|null $params
+   * @return mixed|false False if query result set is empty.
+   */
   function get ($query, $params = null)
   {
     $st = $this->query ($query, $params);
-    if ($st)
-      return $st->fetchColumn (0);
-    return null;
+    return $st->fetchColumn (0);
   }
 
   public function exec ($statement, $params = null)

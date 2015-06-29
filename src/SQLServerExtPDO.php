@@ -17,13 +17,13 @@ class SQLServerExtPDO extends ExtPDO
   ];
 
   /**
-   * @param array      $settings        A configuration array with the following keys:<table cellspacing=0
-   *                                    cellpadding=0>
-   *                                    <tr>DB_DATABASE           <td>The database name.
-   *                                    <tr>DB_HOST               <td>The database server's host IP or domain name.
-   *                                    <tr>DB_PORT               <td>The database server's port (optional).
-   *                                    <tr>DB_USERNAME           <td>The username.
-   *                                    <tr>DB_PASSWORD           <td>The password.
+   * @param array      $settings        A configuration array with the following keys:<p>
+   *                                    <table cellspacing=0 cellpadding=0>
+   *                                    <tr><kbd>database        <td>The database name.
+   *                                    <tr><kbd>host            <td>The database server's host IP or domain name.
+   *                                    <tr><kbd>port            <td>The database server's port (optional).
+   *                                    <tr><kbd>username &nbsp; <td>The username.
+   *                                    <tr><kbd>password        <td>The password.
    *                                    </table>
    * @param array|null $optionsOverride Entries on this array override the default PDO connection options.
    */
@@ -32,9 +32,9 @@ class SQLServerExtPDO extends ExtPDO
     if (isset($optionsOverride))
       foreach ($optionsOverride as $k => $v)
         $this->options[$k] = $v;
-    $dsn = "sqlsrv:Database={$settings['DB_DATABASE']};Server={$settings['DB_HOST']}";
-    if (isset ($_ENV['DB_PORT']))
-      $dsn .= ",{$settings['DB_PORT']}";
-    parent::__construct ($dsn, $settings['DB_USERNAME'], $settings['DB_PASSWORD'], $this->options);
+    $dsn = "sqlsrv:Database={$settings['database']};Server={$settings['host']}";
+    if (isset ($_ENV['port']))
+      $dsn .= ",{$settings['port']}";
+    parent::__construct ($dsn, $settings['username'], $settings['password'], $this->options);
   }
 }

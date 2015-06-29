@@ -16,19 +16,24 @@ class SQLiteExtPDO extends ExtPDO
     PDO::ATTR_TIMEOUT            => 5,
   ];
 
+  /**
+   * Enable foreign keyd support on SQLite.
+   *
+   * Override to change the behaviour.
+   */
   protected $enableForeignKeys = true;
 
   /**
-   * @param array      $settings        A configuration array with the following keys:<table cellspacing=0
-   *                                    cellpadding=0>
-   *                                    <tr>DB_DATABASE &nbsp; <td>The database filename. Use ':memory:' for an
+   * @param array      $settings        A configuration array with the following keys:<p>
+   *                                    <table cellspacing=0 cellpadding=0>
+   *                                    <tr><kbd>database &nbsp; <td>The database filename. Use ':memory:' for an
    *                                    in-memory db.
    *                                    </table>
    * @param array|null $optionsOverride Entries on this array override the default PDO connection options.
    */
   function __construct (array $settings, array $optionsOverride = null)
   {
-    $database = $settings['DB_DATABASE'];
+    $database = $settings['database'];
     if ($database != ':memory:') {
       if (!file_exists ($database))
         touch ($database);

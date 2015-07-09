@@ -36,9 +36,9 @@ class MySQLExtPDO extends ExtPDO
   function __construct (array $settings, array $optionsOverride = null)
   {
     $dsn = "mysql:host={$settings['host']};dbname={$settings['database']}";
-    if (isset ($_ENV['port']))
+    if (!empty ($_ENV['port']))
       $dsn .= ";port={$settings['port']}";
-    if (isset ($_ENV['unixSocket']))
+    if (!empty ($_ENV['unixSocket']))
       $dsn .= ";unix_socket={$settings['unixSocket']}";
     if (!empty($settings['charset'])) {
       $cmd = "SET NAMES '{$settings['charset']}'";

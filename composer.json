@@ -1,5 +1,5 @@
 {
-  "name": "php-kit/extpdo",
+  "name": "php-kit/ext-pdo",
   "description": "An extension to the standard PHP PDO API",
   "license": "MIT",
   "authors": [

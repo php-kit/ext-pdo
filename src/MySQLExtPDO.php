@@ -1,5 +1,5 @@
 <?php
-namespace Impactwave;
+namespace PhpKit;
 use PDO;
 
 class MySQLExtPDO extends ExtPDO

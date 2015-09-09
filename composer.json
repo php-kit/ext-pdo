@@ -1,6 +1,6 @@
 {
-  "name": "impactwave/extpdo",
-  "description": "An extension to the standard PHP PDO API.",
+  "name": "php-kit/extpdo",
+  "description": "An extension to the standard PHP PDO API",
   "license": "MIT",
   "authors": [
     {
@@ -14,11 +14,11 @@
     }
   ],
   "require": {
+    "php": ">=5.4.0"
   },
   "autoload": {
     "psr-4": {
-      "Impactwave\\": "src"
+      "PhpKit\\": "src"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }

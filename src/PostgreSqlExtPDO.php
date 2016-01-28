@@ -3,9 +3,9 @@ namespace PhpKit;
 use PDO;
 
 /**
- * A PDO interface to SQLServer databases.
+ * A PDO interface to PostgreSQL databases.
  */
-class SqlserverExtPDO extends ExtPDO
+class PostgreSqlExtPDO extends ExtPDO
 {
   /**
    * PDO options to be applied when connecting to the database.
@@ -35,9 +35,9 @@ class SqlserverExtPDO extends ExtPDO
     if (isset($optionsOverride))
       foreach ($optionsOverride as $k => $v)
         $this->options[$k] = $v;
-    $dsn = "sqlsrv:Database={$settings['database']};Server={$settings['host']}";
+    $dsn = "pgsql:dbname={$settings['database']};host={$settings['host']}";
     if (isset ($settings['port']))
-      $dsn .= ",{$settings['port']}";
+      $dsn .= ";port={$settings['port']}";
     parent::__construct ($dsn, $settings['username'], $settings['password'], $this->options);
   }
 }

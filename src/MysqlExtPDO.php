@@ -27,7 +27,7 @@ class MysqlExtPDO extends ExtPDO
    *                                    <tr><kbd>database           <td>The database name.
    *                                    <tr><kbd>host               <td>The database server's host IP or domain name.
    *                                    <tr><kbd>port               <td>The database server's port (optional).
-   *                                    <tr><kbd>unixSocket &nbsp; <td>The connection's UNIX socket (optional).
+   *                                    <tr><kbd>unixSocket &nbsp;  <td>The connection's UNIX socket (optional).
    *                                    <tr><kbd>charset            <td>The database charset (optional), ex: 'utf8'.
    *                                    <tr><kbd>collation          <td>The database collation (optional),
    *                                    ex:'utf8_unicode_ci'.
@@ -39,9 +39,9 @@ class MysqlExtPDO extends ExtPDO
   function __construct (array $settings, array $optionsOverride = null)
   {
     $dsn = "mysql:host={$settings['host']};dbname={$settings['database']}";
-    if (!empty ($_ENV['port']))
+    if (!empty ($settings['port']))
       $dsn .= ";port={$settings['port']}";
-    if (!empty ($_ENV['unixSocket']))
+    if (!empty ($settings['unixSocket']))
       $dsn .= ";unix_socket={$settings['unixSocket']}";
     if (!empty($settings['charset'])) {
       $cmd = "SET NAMES '{$settings['charset']}'";

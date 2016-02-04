@@ -1,7 +1,7 @@
 <?php
 namespace PhpKit;
 
-class Connection
+class Connection implements ConnectionInterface
 {
   const ENV_CONFIG_SETTINGS = [
     'DB_CHARSET'     => 'charset',
@@ -15,7 +15,6 @@ class Connection
     'DB_UNIX_SOCKET' => 'unixSocket',
     'DB_USERNAME'    => 'username',
   ];
-
   public $charset;
   public $collation;
   public $database;
@@ -26,14 +25,9 @@ class Connection
   public $prefix;
   public $unixSocket;
   public $username;
+  /** @var ExtPDO */
+  private $pdo;
 
-  /**
-   * Creates a connection instance whose properties are set from environment variables.
-   *
-   * > <p>**Tip:** this is more useful if used in conjunction with the `vlucas/phpdotenv` library.
-   *
-   * @return static
-   */
   static function getFromEnviroment ()
   {
     $cfg = new static;
@@ -42,35 +36,89 @@ class Connection
     return $cfg;
   }
 
-  /**
-   * Gets an extended PDO object initialized with the connection properties.
-   *
-   * @param array|null $options Entries on this array override the default PDO connection options.
-   * @return MysqlExtPDO|PostgreSqlExtPDO|SqliteExtPDO|SqlserverExtPDO
-   */
   function getPdo (array $options = null)
   {
-    return ExtPDO::create ($this->driver, $this->getProperties (), $options);
+    return $this->pdo ?: ($this->pdo = ExtPDO::create ($this->driver, $this->getProperties (), $options));
   }
 
-  /**
-   * Gets all connection properties on an associative array.
-   *
-   * @return array
-   */
   function getProperties ()
   {
     return get_object_vars ($this);
   }
 
-  /**
-   * Checks if the connection properties have been set (at least, having a driver set).
-   *
-   * @return bool
-   */
   function isAvailable ()
   {
     return $this->driver && $this->driver !== 'none';
+  }
+
+  public function charset ($charset = null)
+  {
+    if (is_null ($charset)) return $this->charset;
+    $this->charset = $charset;
+    return $this;
+  }
+
+  public function collation ($collation = null)
+  {
+    if (is_null ($collation)) return $this->collation;
+    $this->collation = $collation;
+    return $this;
+  }
+
+  public function database ($database = null)
+  {
+    if (is_null ($database)) return $this->database;
+    $this->database = $database;
+    return $this;
+  }
+
+  public function driver ($driver = null)
+  {
+    if (is_null ($driver)) return $this->driver;
+    $this->driver = $driver;
+    return $this;
+  }
+
+  public function host ($host = null)
+  {
+    if (is_null ($host)) return $this->host;
+    $this->host = $host;
+    return $this;
+  }
+
+  public function password ($password = null)
+  {
+    if (is_null ($password)) return $this->password;
+    $this->password = $password;
+    return $this;
+  }
+
+  public function port ($port = null)
+  {
+    if (is_null ($port)) return $this->port;
+    $this->port = $port;
+    return $this;
+  }
+
+  public function prefix ($prefix = null)
+  {
+    if (is_null ($prefix)) return $this->prefix;
+    $this->prefix = $prefix;
+    return $this;
+  }
+
+  public function unixSocket ($unixSocket = null)
+  {
+    if (is_null ($unixSocket)) return $this->unixSocket;
+    $this->unixSocket = $unixSocket;
+    return $this;
+  }
+
+  public function username ($username = null)
+  {
+    if (is_null ($username)) return $this->username;
+    $this->username = $username;
+    return $this;
   }
 
 }

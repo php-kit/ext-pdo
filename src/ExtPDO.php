@@ -5,7 +5,7 @@ use PDO;
 
 class ExtPDO extends PDO
 {
-  public $transactionDepth = 0;
+  protected $transactionDepth = 0;
 
   /**
    * Creates an instance of an ExtPDO subclass that matches the given driver name.
@@ -100,6 +100,14 @@ class ExtPDO extends PDO
   {
     $st = $this->query ($query, $params);
     return $st->fetchColumn (0);
+  }
+
+  /**
+   * @return int
+   */
+  function getTransactionDepth ()
+  {
+    return $this->transactionDepth;
   }
 
 }

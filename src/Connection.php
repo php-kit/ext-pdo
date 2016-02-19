@@ -61,8 +61,11 @@ class Connection implements ConnectionInterface
   static function getFromEnviroment ()
   {
     $cfg = new static;
-    foreach (self::$ENV_CONFIG_SETTINGS as $k => $p)
-      $cfg->$p = env ($k);
+    foreach (self::$ENV_CONFIG_SETTINGS as $k => $p) {
+      $v = env ($k);
+      if (isset($v) && $v !== '')
+        $cfg->$p = $v;
+    }
     return $cfg;
   }
 

@@ -21,7 +21,7 @@ interface ConnectionInterface
   function getPdo (array $options = null);
 
   /**
-   * Gets all connection properties on an associative array.
+   * Gets on an associative array all connection properties that are set.
    *
    * @return array
    */

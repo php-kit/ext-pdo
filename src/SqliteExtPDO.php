@@ -1,5 +1,5 @@
 <?php
-namespace PhpKit;
+namespace PhpKit\ExtPDO;
 use PDO;
 
 /**

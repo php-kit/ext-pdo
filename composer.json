@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PhpKit\\": "src"
+      "PhpKit\\ExtPDO\\": "src"
     }
   }
 }

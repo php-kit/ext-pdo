@@ -1,6 +1,14 @@
 <?php
-namespace PhpKit;
+namespace PhpKit\ExtPDO;
 
+use PhpKit\ExtPDO\Interfaces\ConnectionInterface;
+
+/**
+ * Represents a database connection.
+ *
+ * <p>It allows settinga and getting configuration settings for the connection and it allows creating and/or retrieving
+ * the associated {@see \PhpKit\ExtPDO\ExtPDO} instance.
+ */
 class Connection implements ConnectionInterface
 {
   static $ENV_CONFIG_SETTINGS = [
@@ -30,6 +38,18 @@ class Connection implements ConnectionInterface
   private $unixSocket;
   private $username;
 
+  static function getFromEnviroment ($connectionName = '')
+  {
+    $cfg     = new static;
+    $prefix_ = $connectionName ? $connectionName . '_' : '';
+    foreach (self::$ENV_CONFIG_SETTINGS as $k => $p) {
+      $v = env ("$prefix_$k");
+      if (isset($v) && $v !== '')
+        $cfg->$p = $v;
+    }
+    return $cfg;
+  }
+
   function charset ($charset = null)
   {
     if (is_null ($charset)) return $this->charset;
@@ -56,17 +76,6 @@ class Connection implements ConnectionInterface
     if (is_null ($driver)) return $this->driver;
     $this->driver = $driver;
     return $this;
-  }
-
-  static function getFromEnviroment ()
-  {
-    $cfg = new static;
-    foreach (self::$ENV_CONFIG_SETTINGS as $k => $p) {
-      $v = env ($k);
-      if (isset($v) && $v !== '')
-        $cfg->$p = $v;
-    }
-    return $cfg;
   }
 
   function getPdo (array $options = null)

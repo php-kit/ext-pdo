@@ -1,5 +1,5 @@
 <?php
-namespace PhpKit;
+namespace PhpKit\ExtPDO;
 
 use PDO;
 
@@ -62,6 +62,13 @@ class ExtPDO extends PDO
       parent::commit ();
   }
 
+  /**
+   * Executes an SQL statement and returns the number of affected rows.
+   *
+   * @param string     $statement
+   * @param array|null $params
+   * @return bool|int  FALSE on failure.
+   */
   public function exec ($statement, $params = null)
   {
     if (!$params)
@@ -71,13 +78,25 @@ class ExtPDO extends PDO
     return $r ? $st->rowCount () : false;
   }
 
-  public function query ($statement, $params = null)
+  /**
+   * Returns a single value from the first column of the first record of the result set of the given query.
+   *
+   * @param string     $query
+   * @param array|null $params
+   * @return mixed|false FALSE on failure.
+   */
+  function get ($query, $params = null)
   {
-    if (!$params)
-      return parent::query ($statement);
-    $st = $this->prepare ($statement);
-    $r  = $st->execute ($params);
-    return $r ? $st : false;
+    $st = $this->query ($query, $params);
+    return $st ? $st->fetchColumn (0) : false;
+  }
+
+  /**
+   * @return int
+   */
+  function getTransactionDepth ()
+  {
+    return $this->transactionDepth;
   }
 
   /**
@@ -92,22 +111,22 @@ class ExtPDO extends PDO
   }
 
   /**
+   * Similar to {@see query} but supports immediate binding to query parameters.
+   *
    * @param string     $query
    * @param array|null $params
-   * @return mixed|false False if query result set is empty.
+   * @param mixed      ...$fetchModeArgs
+   * @return bool|\PDOStatement
    */
-  function get ($query, $params = null)
+  public function select ($query, $params = null, ...$fetchModeArgs)
   {
-    $st = $this->query ($query, $params);
-    return $st->fetchColumn (0);
-  }
-
-  /**
-   * @return int
-   */
-  function getTransactionDepth ()
-  {
-    return $this->transactionDepth;
+    if (!$params)
+      return parent::query ($query, ...$fetchModeArgs);
+    $st = $this->prepare ($query);
+    if ($fetchModeArgs)
+      $st->setFetchMode (...$fetchModeArgs);
+    $r = $st->execute ($params);
+    return $r ? $st : false;
   }
 
 }

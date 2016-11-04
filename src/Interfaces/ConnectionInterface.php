@@ -44,7 +44,7 @@ interface ConnectionInterface
    * > <p>**Tip:** this is more useful if used in conjunction with the `vlucas/phpdotenv` library.
    *
    * #### Examples
-   * If `$connectionName = ''`, settings will be read from `DB_DRIVER, DB_DATABASE,` etc.
+   * If `$connectionName = 'default'`, settings will be read from `DB_DRIVER, DB_DATABASE,` etc.
    *
    * If `$connectionName = 'myCon'`, settings will be read from `myCon_DB_DRIVER, myCon_DB_DATABASE,` etc.
    *
@@ -63,16 +63,17 @@ interface ConnectionInterface
    *       DB_USERNAME
    *
    * @param string $connectionName Settings will be read from variables prefixed with this name and an underscore, or
-   *                               with no prefix it this is not specified or if it's an empty string.
+   *                               with no prefix it this is not specified or if it's the 'default' string.
    * @return static
    */
-  static function getFromEnviroment ($connectionName = '');
+  static function getFromEnviroment ($connectionName = 'default');
 
   /**
    * Gets an extended PDO object initialized with the connection properties.
    *
    * @param array|null $options Entries on this array override the default PDO connection options.
-   * @return \PhpKit\ExtPDO\MysqlExtPDO|\PhpKit\ExtPDO\PostgreSqlExtPDO|SqliteExtPDO|\PhpKit\ExtPDO\SqlserverExtPDO
+   * @return MysqlExtPDO|PostgreSqlExtPDO|SqliteExtPDO|SqlserverExtPDO
+   * @throws \PDOException
    */
   function getPdo (array $options = null);
 

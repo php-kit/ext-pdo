@@ -16,19 +16,19 @@ class Connections implements Interfaces\ConnectionsInterface
    */
   protected $factories = [];
 
-  function exists ($name = '')
+  function exists ($name = 'default')
   {
     if (isset ($this->connections[$name]) || isset ($this->factories[$name]))
       return true;
-    $prefix_ = $name ? $name . '_' : '';
+    $prefix_ = $name && $name != 'default' ? $name . '_' : '';
     return !is_null (env ($prefix_ . 'DB_DRIVER'));
   }
 
-  function get ($name = '')
+  function get ($name = 'default')
   {
     $con = get ($this->connections, $name);
     if (!$con)
-      $con = ($factory = $this->factories[$name])
+      $con = ($factory = get ($this->factories, $name))
         ? $this->connections[$name] = $factory ()
         : (
         ($newCon = Connection::getFromEnviroment ($name))

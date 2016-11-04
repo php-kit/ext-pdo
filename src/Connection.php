@@ -1,6 +1,7 @@
 <?php
 namespace PhpKit\ExtPDO;
 
+use Electro\Traits\InspectionTrait;
 use PhpKit\ExtPDO\Interfaces\ConnectionInterface;
 
 /**
@@ -11,6 +12,8 @@ use PhpKit\ExtPDO\Interfaces\ConnectionInterface;
  */
 class Connection implements ConnectionInterface
 {
+  use InspectionTrait;
+
   static $ENV_CONFIG_SETTINGS = [
     'DB_CHARSET'     => 'charset',
     'DB_COLLATION'   => 'collation',
@@ -38,16 +41,18 @@ class Connection implements ConnectionInterface
   private $unixSocket;
   private $username;
 
-  static function getFromEnviroment ($connectionName = '')
+  static function getFromEnviroment ($connectionName = 'default')
   {
     $cfg     = new static;
-    $prefix_ = $connectionName ? $connectionName . '_' : '';
+    $prefix_ = $connectionName && $connectionName != 'default' ? $connectionName . '_' : '';
     foreach (self::$ENV_CONFIG_SETTINGS as $k => $p) {
       $v = env ("$prefix_$k");
       if (isset($v) && $v !== '')
         $cfg->$p = $v;
     }
-    return $cfg;
+    if ($cfg->isAvailable())
+      return $cfg;
+    throw new \PDOException("Connection <kbd>$connectionName</kbd> is not defined");
   }
 
   function charset ($charset = null)

@@ -19,10 +19,10 @@ interface ConnectionsInterface
    * $name_DB_DRIVER variable does not exist, `false` is returned.
    *
    * @param string $name A key that identifies the connection on the set of available connections.
-   *                     If not specified or an empty string, the default (main) connection is targeted.
+   *                     If not specified or the 'default' string, the default (main) connection is targeted.
    * @return bool TRUE if a connection with the given name is available.
    */
-  function exists ($name = '');
+  function exists ($name = 'default');
 
   /**
    * Return a connection for the given name, if one exists or it can be created.
@@ -32,10 +32,10 @@ interface ConnectionsInterface
    * If the $name_DB_DRIVER variable does not exist, no connection is created and `null` is returned.
    *
    * @param string $name A key that identifies the connection on the set of available connections.
-   *                     If not specified or an empty string, the default (main) connection is targeted.
+   *                     If not specified or the 'default' string, the default (main) connection is targeted.
    * @return Connection|null NULL if no connection with the given name is available.
    */
-  function get ($name = '');
+  function get ($name = 'default');
 
   /**
    * Registers a connection that will be instantiaded only when needed.

@@ -47,7 +47,7 @@ class Connection implements ConnectionInterface
     $prefix_ = $connectionName && $connectionName != 'default' ? $connectionName . '_' : '';
     foreach (self::$ENV_CONFIG_SETTINGS as $k => $p) {
       $v = env ("$prefix_$k");
-      if (isset($v) && $v !== '')
+      if ($v !== '')
         $cfg->$p = $v;
     }
     if ($cfg->isAvailable())

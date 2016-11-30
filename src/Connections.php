@@ -21,7 +21,7 @@ class Connections implements Interfaces\ConnectionsInterface
     if (isset ($this->connections[$name]) || isset ($this->factories[$name]))
       return true;
     $prefix_ = $name && $name != 'default' ? $name . '_' : '';
-    return !is_null (env ($prefix_ . 'DB_DRIVER'));
+    return env ($prefix_ . 'DB_DRIVER') !== '';
   }
 
   function get ($name = 'default')

@@ -1,4 +1,5 @@
 <?php
+
 namespace PhpKit\ExtPDO;
 
 use PDO;
@@ -81,13 +82,13 @@ class ExtPDO extends PDO
   /**
    * Returns a single value from the first column of the first record of the result set of the given query.
    *
-   * @param string     $query
-   * @param array|null $params
+   * @param string $query
+   * @param array  $params [optional] Extra arguments for the {@see PDO::query} call.
    * @return mixed|false FALSE on failure.
    */
-  function get ($query, $params = null)
+  function get ($query, ...$params)
   {
-    $st = $this->query ($query, $params);
+    $st = $this->query ($query, ...$params);
     return $st ? $st->fetchColumn (0) : false;
   }
 

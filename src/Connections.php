@@ -27,15 +27,15 @@ class Connections implements Interfaces\ConnectionsInterface
   function get ($name = 'default')
   {
     $con = get ($this->connections, $name);
-    if (!$con)
-      $con = ($factory = get ($this->factories, $name))
-        ? $this->connections[$name] = $factory ()
-        : (
-        ($newCon = Connection::getFromEnviroment ($name))
-          ? $this->connections[$name] = $newCon
-          : null
-        );
-    return $con;
+    if ($con)
+      return $con;
+
+    if ($factory = get ($this->factories, $name)) {
+      return $this->connections[$name] = $factory ($this->connectionClass);
+    }
+
+    $conClass = $this->connectionClass;
+    return $this->connections[$name] = $conClass::getFromEnviroment ($name);
   }
 
   function register ($name, callable $factory)
@@ -54,4 +54,5 @@ class Connections implements Interfaces\ConnectionsInterface
   {
     $this->connectionClass = $class;
   }
+
 }

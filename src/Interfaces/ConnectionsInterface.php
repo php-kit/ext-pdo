@@ -38,11 +38,12 @@ interface ConnectionsInterface
   function get ($name = 'default');
 
   /**
-   * Registers a connection that will be instantiaded only when needed.
+   * Registers a custom connection factory.
    *
    * @param string   $name    A key that identifies the connection on the set of available connections.
    *                          To target the default (main) connection, specify an empty string.
-   * @param callable $factory A function that returns a new instance of {@see \PhpKit\Connection}.
+   * @param callable $factory A function that receives a connection class name and returns a new instance of
+   *                          {@see \PhpKit\Connection}.
    * @return $this Self, for chaining declarations.
    */
   function register ($name, callable $factory);

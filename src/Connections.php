@@ -27,14 +27,16 @@ class Connections implements Interfaces\ConnectionsInterface
   function get ($name = 'default')
   {
     $con = get ($this->connections, $name);
-    if (!$con)
-      $con = ($factory = get ($this->factories, $name))
-        ? $this->connections[$name] = $factory ()
-        : (
-        ($newCon = Connection::getFromEnviroment ($name))
-          ? $this->connections[$name] = $newCon
-          : null
-        );
+    if (!$con) {
+      if ($factory = get ($this->factories, $name))
+        $con = $this->connections[$name] = $factory ();
+      else {
+        /** @var Connection $class */
+        $class = $this->connectionClass;
+        if ($con = $class::getFromEnviroment ($name))
+          $this->connections[$name] = $con;
+      }
+    }
     return $con;
   }
 

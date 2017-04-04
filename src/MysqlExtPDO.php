@@ -17,7 +17,7 @@ class MysqlExtPDO extends ExtPDO
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_TIMEOUT            => 5,
-    PDO::MYSQL_ATTR_FOUND_ROWS   => true,  // FIX: compatibility problem.
+    PDO::MYSQL_ATTR_FOUND_ROWS   => true,  // FIX: compatibility problem; true = return how many rows update queries actually found/matched.
     PDO::ATTR_EMULATE_PREPARES   => false, // Make the mysqlnd driver return the proper field data types.
   ];
 

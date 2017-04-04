@@ -56,4 +56,5 @@ class Connections implements Interfaces\ConnectionsInterface
   {
     $this->connectionClass = $class;
   }
+
 }

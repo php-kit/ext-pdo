@@ -11,6 +11,7 @@ class SqlserverExtPDO extends ExtPDO
    * PDO options to be applied when connecting to the database.
    *
    * A map of PDO::ATTR_xxx constants to the corresponding values.
+   *
    * @var array
    */
   public $options = [
@@ -39,5 +40,6 @@ class SqlserverExtPDO extends ExtPDO
     if (isset ($settings['port']))
       $dsn .= ",{$settings['port']}";
     parent::__construct ($dsn, $settings['username'], $settings['password'], $this->options);
+    $this->exec ('SET QUOTED_IDENTIFIER ON'); // Use double quotes for quoting identifiers, to make the query syntax more ANSI compliant.
   }
 }

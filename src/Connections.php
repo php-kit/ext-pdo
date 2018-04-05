@@ -1,6 +1,11 @@
 <?php
 namespace PhpKit\ExtPDO;
 
+use PhpKit\ExtPDO\Interfaces\ConnectionsInterface;
+
+/**
+ * @see ConnectionsInterface
+ */
 class Connections implements Interfaces\ConnectionsInterface
 {
   /**

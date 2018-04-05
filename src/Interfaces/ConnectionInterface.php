@@ -1,16 +1,11 @@
 <?php
 namespace PhpKit\ExtPDO\Interfaces;
 
-use PhpKit\ExtPDO\MysqlExtPDO;
-use PhpKit\ExtPDO\PostgreSqlExtPDO;
-use PhpKit\ExtPDO\SqliteExtPDO;
-use PhpKit\ExtPDO\SqlserverExtPDO;
-
 /**
- * Represents a database connection.
+ * Represents a database connection's configuration.
  *
- * <p>It allows settinga and getting configuration settings for the connection and it allows creating and/or retrieving
- * the associated {@see \PhpKit\ExtPDO\ExtPDO} instance.
+ * <p>It allows setting and getting configuration settings for the connection and it allows creating and/or retrieving
+ * the associated {@see \PhpKit\ExtPDO\Interfaces\ExtPDOInterface} instance.
  */
 interface ConnectionInterface
 {
@@ -69,10 +64,10 @@ interface ConnectionInterface
   static function getFromEnviroment ($connectionName = 'default');
 
   /**
-   * Gets an extended PDO object initialized with the connection properties.
+   * Gets an extended PDO object initialized with the connection's properties.
    *
    * @param array|null $options Entries on this array override the default PDO connection options.
-   * @return MysqlExtPDO|PostgreSqlExtPDO|SqliteExtPDO|SqlserverExtPDO
+   * @return ExtPDOInterface
    * @throws \PDOException
    */
   function getPdo (array $options = null);

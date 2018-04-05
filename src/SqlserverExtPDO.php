@@ -4,6 +4,8 @@ use PDO;
 
 /**
  * A PDO interface to SQLServer databases.
+ *
+ * @see __construct
  */
 class SqlserverExtPDO extends ExtPDO
 {

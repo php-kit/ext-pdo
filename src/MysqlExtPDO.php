@@ -4,6 +4,8 @@ use PDO;
 
 /**
  * A PDO interface to MySQL databases.
+ *
+ * @see __construct
  */
 class MysqlExtPDO extends ExtPDO
 {

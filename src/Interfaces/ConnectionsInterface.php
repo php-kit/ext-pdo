@@ -5,7 +5,7 @@ use PhpKit\ExtPDO\Connection;
 
 
 /**
- * A mix of a container and a registry of database connections.
+ * A registry of database connections.
  *
  * <p>Connections are lazily instantiated as needed.
  */
@@ -25,7 +25,7 @@ interface ConnectionsInterface
   function exists ($name = 'default');
 
   /**
-   * Return a connection for the given name, if one exists or it can be created.
+   * Return a connection for the given name, if one exists or if it can be created.
    *
    * <p>If no connection with the given name exists or is registered, an attempt is made to automatically create a
    * connection from environment variables; these must be prefixed with the connection name and an underscore.

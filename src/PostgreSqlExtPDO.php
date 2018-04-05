@@ -4,6 +4,8 @@ use PDO;
 
 /**
  * A PDO interface to PostgreSQL databases.
+ *
+ * @see __construct
  */
 class PostgreSqlExtPDO extends ExtPDO
 {

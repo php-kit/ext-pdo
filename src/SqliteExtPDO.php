@@ -4,6 +4,8 @@ use PDO;
 
 /**
  * A PDO interface to SQLite databases.
+ *
+ * @see __construct
  */
 class SqliteExtPDO extends ExtPDO
 {

@@ -5,10 +5,7 @@ use Electro\Traits\InspectionTrait;
 use PhpKit\ExtPDO\Interfaces\ConnectionInterface;
 
 /**
- * Represents a database connection.
- *
- * <p>It allows settinga and getting configuration settings for the connection and it allows creating and/or retrieving
- * the associated {@see \PhpKit\ExtPDO\ExtPDO} instance.
+ * @see ConnectionInterface
  */
 class Connection implements ConnectionInterface
 {

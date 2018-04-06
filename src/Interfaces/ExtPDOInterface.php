@@ -117,7 +117,7 @@ interface ExtPDOInterface
    *                               <p>Emulated prepared statements does not communicate with the database server
    *                               so <b>PDO::prepare</b> does not check the statement.
    */
-  public function prepare ($statement, array $driver_options = null);
+  public function prepare ($statement, $driver_options = null);
 
   /**
    * (PHP 5 &gt;= 5.3.3, Bundled pdo_pgsql, PHP 7)<br/>

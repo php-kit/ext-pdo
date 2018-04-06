@@ -146,18 +146,29 @@ interface ExtPDOInterface
    * <p>**Note:** for most use cases, {@see ExtPDOInterface::select()} or {@see ExtPDOInterface::exec()} are more
    * convenient.
    *
-   * @link http://php.net/manual/en/pdo.query.php
-   * @param string $statement The SQL statement to prepare and execute.
-   *                          <p>Data inside the query should be properly escaped.
-   * @param int    $mode      <p>The fetch mode must be one of the PDO::FETCH_* constants.
-   * @param mixed  $arg3      <p>The second and following parameters are the same as the parameters for
-   *                          PDOStatement::setFetchMode.
-   * @param array  $ctorargs  [optional] Arguments of custom class constructor when the <i>mode</i> parameter is set to
-   *                          <b>PDO::FETCH_CLASS</b>.
+   * <p>**Note:** the signature has an empty argument list for compatibility with PHP's built-in PDO class.
+   *
+   * ### Parameters:
+   *
+   * ####  string $statement
+   * The SQL statement to prepare and execute.
+   * <p>Data inside the query should be properly escaped.
+   *
+   * #### int $mode
+   * The fetch mode must be one of the <b>PDO::FETCH_*</b> constants.
+   * <p>Defaults to {@see PDO::ATTR_DEFAULT_FETCH_MODE}.
+   *
+   * #### mixed $arg3
+   * The second and following parameters are the same as the parameters for {@see PDOStatement::setFetchMode}.
+   *
+   * #### array $ctorargs [optional]
+   * Arguments of custom class constructor when the <i>mode</i> parameter is set to {@see PDO::FETCH_CLASS}.
+   *
    * @return PDOStatement|bool <b>PDO::query</b> returns a PDOStatement object, or <b>FALSE</b> on failure.
    * @see  PDOStatement::setFetchMode For a full description of the second and following parameters.
+   * @link http://php.net/manual/en/pdo.query.php
    */
-  public function query ($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = []);
+  public function query ();
 
   /**
    * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.1.0)<br/>

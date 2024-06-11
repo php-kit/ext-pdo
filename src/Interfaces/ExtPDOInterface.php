@@ -117,9 +117,9 @@ interface ExtPDOInterface
    *                               <p>Emulated prepared statements does not communicate with the database server
    *                               so <b>PDO::prepare</b> does not check the statement.
    */
-  public function prepare ($statement, $driver_options = null);
+  public function prepare(string $query, array $options = []): PDOStatement|false;
 
-  /**
+	/**
    * (PHP 5 &gt;= 5.3.3, Bundled pdo_pgsql, PHP 7)<br/>
    * Checks if inside a transaction
    *
@@ -137,9 +137,9 @@ interface ExtPDOInterface
    * @param mixed $value
    * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
    */
-  public function setAttribute ($attribute, $value);
+  public function setAttribute(int $attribute, mixed $value): bool;
 
-  /**
+	/**
    * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.0)<br/>
    * Executes an SQL statement, returning a result set as a PDOStatement object.
    *
@@ -168,9 +168,9 @@ interface ExtPDOInterface
    * @see  PDOStatement::setFetchMode For a full description of the second and following parameters.
    * @link http://php.net/manual/en/pdo.query.php
    */
-  public function query ();
+  public function query(string $query, ?int $fetchMode = null, mixed ...$fetchModeArgs): PDOStatement|false;
 
-  /**
+	/**
    * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.1.0)<br/>
    * Returns the ID of the last inserted row or sequence value
    *
@@ -183,9 +183,9 @@ interface ExtPDOInterface
    *                     <p>If the PDO driver does not support this capability, <b>PDO::lastInsertId</b> triggers an
    *                     IM001 SQLSTATE.
    */
-  public function lastInsertId ($name = null);
+  public function lastInsertId(?string $name = null): string|false;
 
-  /**
+	/**
    * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.0)<br/>
    * Returns the value of a database connection attribute.
    *
@@ -211,9 +211,9 @@ interface ExtPDOInterface
    * @return mixed A successful call returns the value of the requested PDO attribute.
    *                       An unsuccessful call returns null.
    */
-  public function getAttribute ($attribute);
+  public function getAttribute(int $attribute): mixed;
 
-  /**
+	/**
    * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.1)<br/>
    * Quotes a string for use in a query.
    *
@@ -223,5 +223,5 @@ interface ExtPDOInterface
    * @return string a quoted string that is theoretically safe to pass into an SQL statement. Returns <b>FALSE</b>
    *                               if the driver does not support quoting in this way.
    */
-  public function quote ($string, $parameter_type = PDO::PARAM_STR);
+  public function quote(string $string, int $type = PDO::PARAM_STR): string|false;
 }

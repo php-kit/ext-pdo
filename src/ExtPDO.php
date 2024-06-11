@@ -8,7 +8,7 @@ use PhpKit\ExtPDO\Interfaces\ExtPDOInterface;
 /**
  * @see ExtPDOInterface
  */
-class ExtPDO extends PDO implements ExtPDOInterface
+abstract class ExtPDO extends PDO implements ExtPDOInterface
 {
   protected $transactionDepth = 0;
 
@@ -47,20 +47,20 @@ class ExtPDO extends PDO implements ExtPDOInterface
     throw new \RuntimeException ("Unsupported driver: $driver");
   }
 
-  public function beginTransaction ()
-  {
+  public function beginTransaction(): bool
+	{
     if (++$this->transactionDepth == 1)
       parent::beginTransaction ();
   }
 
-  public function commit ()
-  {
+  public function commit(): bool
+	{
     if (--$this->transactionDepth == 0)
       parent::commit ();
   }
 
-  public function exec ($statement, $params = null)
-  {
+  public function exec($statement, $params = null): int|false
+	{
     if (!$params)
       return parent::exec ($statement);
     $st = $this->prepare ($statement);
@@ -79,8 +79,8 @@ class ExtPDO extends PDO implements ExtPDOInterface
     return $this->transactionDepth;
   }
 
-  public function rollBack ()
-  {
+  public function rollBack(): bool
+	{
     if ($this->transactionDepth > 0) {
       $this->transactionDepth = 0;
       parent::rollBack ();

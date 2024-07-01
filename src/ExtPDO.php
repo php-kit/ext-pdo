@@ -50,17 +50,19 @@ abstract class ExtPDO extends PDO implements ExtPDOInterface
   public function beginTransaction(): bool
 	{
     if (++$this->transactionDepth == 1)
-      parent::beginTransaction ();
+      return parent::beginTransaction ();
+    return false;
   }
 
   public function commit(): bool
-	{
+  {
     if (--$this->transactionDepth == 0)
-      parent::commit ();
+      return parent::commit ();
+    return false;
   }
 
   public function exec($statement, $params = null): int|false
-	{
+  {
     if (!$params)
       return parent::exec ($statement);
     $st = $this->prepare ($statement);
@@ -80,11 +82,12 @@ abstract class ExtPDO extends PDO implements ExtPDOInterface
   }
 
   public function rollBack(): bool
-	{
+  {
     if ($this->transactionDepth > 0) {
       $this->transactionDepth = 0;
-      parent::rollBack ();
+      return parent::rollBack ();
     }
+    return false;
   }
 
   public function select ($query, $params = null, ...$fetchModeArgs)

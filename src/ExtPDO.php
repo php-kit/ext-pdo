@@ -56,9 +56,8 @@ abstract class ExtPDO extends PDO implements ExtPDOInterface
 
   public function commit(): bool
   {
-	if (!$this->inTransaction ()){
+    if (!$this->inTransaction ())
       return false;
-    }
     if (--$this->transactionDepth == 0)
       return parent::commit ();
     return false;
